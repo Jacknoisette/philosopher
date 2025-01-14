@@ -6,7 +6,7 @@
 /*   By: jdhallen <jdhallen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 16:50:03 by jdhallen          #+#    #+#             */
-/*   Updated: 2025/01/13 18:08:38 by jdhallen         ###   ########.fr       */
+/*   Updated: 2025/01/14 13:22:03 by jdhallen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,15 @@ typedef struct s_table
 	int 	sleep_t;
 }   t_table;
 
+typedef struct s_parg
+{
+	t_table *table;
+	int id;
+}	t_parg;
+
 void 	clean(t_table *table);
+void	printf_a(t_table *table);
+void	*philo_test(void *args);
 int		init(t_table *table, int argc, char **argv);
 int 	core(int argc, char **argv);
 int		ft_atoi(const char *nptr);
