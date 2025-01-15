@@ -6,7 +6,7 @@
 /*   By: jdhallen <jdhallen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 16:50:03 by jdhallen          #+#    #+#             */
-/*   Updated: 2025/01/14 13:22:03 by jdhallen         ###   ########.fr       */
+/*   Updated: 2025/01/15 17:31:47 by jdhallen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,21 @@ typedef struct s_fork
 	char			state;
 }   t_fork;
 
+typedef struct s_end
+{
+	int	live;
+	int	finish;
+}	t_end;
+
 typedef struct s_philo
 {
+	struct	timeval lunch_prev;
 	pthread_t	thread;
-	long long	lunch_prev;
+	t_end		end;
 	char		state;
 	int			id;
 	int			lunch_n;
+	int			gen;
 }   t_philo;
 
 typedef struct s_chair
@@ -52,12 +60,14 @@ typedef struct s_chair
 
 typedef struct s_table
 {
+	struct	timeval start;
 	t_chair	*chair;
 	int 	philo_n;
 	int 	lunch_n;
-	int 	lunch_t;
-	int 	die_t;
-	int 	sleep_t;
+	long 	lunch_t;
+	long 	die_t;
+	long	sleep_t;
+	int		end;
 }   t_table;
 
 typedef struct s_parg
@@ -66,11 +76,13 @@ typedef struct s_parg
 	int id;
 }	t_parg;
 
-void 	clean(t_table *table);
-void	printf_a(t_table *table);
-void	*philo_test(void *args);
-int		init(t_table *table, int argc, char **argv);
-int 	core(int argc, char **argv);
-int		ft_atoi(const char *nptr);
+struct timeval	gettime(void);
+long		time_dif(struct timeval inst, struct timeval start);
+long			ft_atol(const char *nptr);
+void 			clean(t_table *table);
+void			printf_a(t_table *table);
+void			*philo_life(void *args);
+int				init(t_table *table, int argc, char **argv);
+int 			core(int argc, char **argv);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jdhallen <jdhallen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 17:25:52 by jdhallen          #+#    #+#             */
-/*   Updated: 2025/01/14 12:30:07 by jdhallen         ###   ########.fr       */
+/*   Updated: 2025/01/15 17:34:28 by jdhallen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,11 @@ int	chair_alloc(t_table *table)
 		table->chair[i].philo.id = i + 1;
 		table->chair[i].philo.lunch_n = 0;
 		table->chair[i].philo.state = 'w';
-		table->chair[i].philo.lunch_prev = 0;
-		table->chair[i].fork.state = 'a';
+		table->chair[i].philo.lunch_prev = gettime();
+		table->chair[i].philo.gen = 0;
+		table->chair[i].philo.end.live = 1;
+		table->chair[i].philo.end.finish = 0;
+		pthread_mutex_init(&table->chair[i].fork.fork_mutex, NULL);
 		i++;
 	}
 	return (0);
@@ -34,12 +37,14 @@ int	chair_alloc(t_table *table)
 
 int	init(t_table *table, int argc, char **argv)
 {
-	table->philo_n = ft_atoi(argv[1]);
-	table->die_t = ft_atoi(argv[2]);
-	table->lunch_t = ft_atoi(argv[3]);
-	table->sleep_t = ft_atoi(argv[4]);
+	table->start = gettime();
+	table->philo_n = ft_atol(argv[1]);
+	table->die_t = ft_atol(argv[2]);
+	table->lunch_t = ft_atol(argv[3]);
+	table->sleep_t = ft_atol(argv[4]);
+	table->end = 0;
 	if (argc == 6)
-		table->lunch_n = ft_atoi(argv[5]);
+		table->lunch_n = ft_atol(argv[5]);
 	else
 		table->lunch_n = -1;
 	if (chair_alloc(table) == -1)

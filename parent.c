@@ -6,7 +6,7 @@
 /*   By: jdhallen <jdhallen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 17:26:11 by jdhallen          #+#    #+#             */
-/*   Updated: 2025/01/14 12:35:56 by jdhallen         ###   ########.fr       */
+/*   Updated: 2025/01/15 18:29:30 by jdhallen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,24 @@ int	create_philo(t_table *table)
 		arg = malloc(sizeof(t_parg));
 		arg->table = table;
 		arg->id = i;
-		pthread_create(&table->chair[i].philo.thread, NULL, philo_test, (void *)arg);
+		pthread_create(&table->chair[i].philo.thread, NULL, philo_life, (void *)arg);
 		i++;
 	}
 	return (0);
+}
+
+int	stop_destroy(t_table *table)
+{
+	int	i;
+
+	i = 0;
+	while (i < table->philo_n)
+	{
+		if (table->chair[i].philo.end.finish == 0)
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
 int	destroy_philo(t_table *table)
@@ -34,9 +48,31 @@ int	destroy_philo(t_table *table)
 	int	i;
 	
 	i = 0;
+	while (1)
+	{
+		if (i == table->philo_n )
+			i = 0;
+		if (table->chair[i].philo.end.live == 0)
+		{
+			table->end = 1;
+			break ;
+		}
+		if (stop_destroy(table) == 1)
+			break ;
+		usleep(1);
+		i++;
+	}
+	i = 0;
 	while (i < table->philo_n)
 	{
+		table->chair[i].philo.end.finish = 1;
 		pthread_join(table->chair[i].philo.thread, NULL);
+		i++;
+	}
+	i = 0;
+	while (i < table->philo_n)
+	{
+		pthread_mutex_destroy(&table->chair[i].fork.fork_mutex);
 		i++;
 	}
 	return (0);
