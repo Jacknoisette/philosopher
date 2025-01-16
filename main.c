@@ -12,7 +12,7 @@
 
 #include "philosopher.h"
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	core(argc, argv);
 	return (0);

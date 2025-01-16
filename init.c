@@ -6,7 +6,7 @@
 /*   By: jdhallen <jdhallen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 17:25:52 by jdhallen          #+#    #+#             */
-/*   Updated: 2025/01/15 17:34:28 by jdhallen         ###   ########.fr       */
+/*   Updated: 2025/01/16 12:38:12 by jdhallen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	chair_alloc(t_table *table)
 {
 	int	i;
-	
+
 	i = 0;
 	table->chair = malloc(table->philo_n * sizeof(t_chair));
 	if (table->chair == NULL)
@@ -29,6 +29,7 @@ int	chair_alloc(t_table *table)
 		table->chair[i].philo.gen = 0;
 		table->chair[i].philo.end.live = 1;
 		table->chair[i].philo.end.finish = 0;
+		table->chair[i].fork.state = 'a';
 		pthread_mutex_init(&table->chair[i].fork.fork_mutex, NULL);
 		i++;
 	}

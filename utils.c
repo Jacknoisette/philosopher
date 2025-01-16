@@ -6,7 +6,7 @@
 /*   By: jdhallen <jdhallen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 17:28:41 by jdhallen          #+#    #+#             */
-/*   Updated: 2025/01/15 18:07:07 by jdhallen         ###   ########.fr       */
+/*   Updated: 2025/01/16 12:34:56 by jdhallen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,19 @@
 
 struct timeval	gettime(void)
 {
-	struct	timeval t;
-	
+	struct timeval	t;
+
 	gettimeofday(&t, NULL);
-	return(t);
+	return (t);
 }
 
-long	time_dif(struct timeval inst, struct timeval start)
+unsigned long	time_dif(struct timeval inst, struct timeval start)
 {
-	return(((inst.tv_sec - start.tv_sec) * 1000000L) + 
-		(inst.tv_usec - start.tv_usec) / 1000);
+	return (((inst.tv_sec - start.tv_sec) * 1000)
+		+ (inst.tv_usec - start.tv_usec) / 1000);
 }
 
-void clean(t_table *table)
+void	clean(t_table *table)
 {
 	int	i;
 
@@ -38,7 +38,7 @@ void clean(t_table *table)
 void	printf_a(t_table *table)
 {
 	int	i;
-	
+
 	i = 0;
 	while (table->philo_n > i)
 	{
@@ -50,21 +50,17 @@ void	printf_a(t_table *table)
 long	ft_atol(const char *nptr)
 {
 	long	i;
-	long	s;
 	long	n;
 
 	i = 0;
-	s = 0;
 	n = 0;
 	if ((nptr[i] >= 9 && nptr[i] <= 13) || nptr[i] == 32)
 	{
 		while (((nptr[i] >= 9 && nptr[i] <= 13) || nptr[i] == 32))
 			i++;
 	}
-	if ((nptr[i] == '+' && ++s) || (nptr[i] == '-' && --s))
+	if (nptr[i] == '+')
 		i++;
-	else
-		s = 1;
 	if ((nptr[i] != '\0') && nptr[i] >= 48 && nptr[i] <= 57)
 	{
 		while ((nptr[i] != '\0' && nptr[i] >= 48 && nptr[i] <= 57))
@@ -73,5 +69,5 @@ long	ft_atol(const char *nptr)
 			i++;
 		}
 	}
-	return (n *= s);
+	return (n);
 }

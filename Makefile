@@ -6,7 +6,7 @@
 #    By: jdhallen <jdhallen@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/13 15:03:33 by jdhallen          #+#    #+#              #
-#    Updated: 2025/01/13 17:44:49 by jdhallen         ###   ########.fr        #
+#    Updated: 2025/01/16 12:42:59 by jdhallen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,8 @@ CFLAGS = -Wall -Wextra -Werror
 
 exec = philosopher
 
-SRCS = main.c parent.c init.c philosopher.c utils.c
+SRCS = main.c parent.c init.c philosopher.c utils.c \
+	philosopher_action.c
 
 OBJS = $(SRCS:.c=.o)
 
